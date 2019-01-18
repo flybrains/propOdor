@@ -1,0 +1,31 @@
+
+
+int odorPin = 5;
+int airPin = 6;
+
+int odor_stpt = 0;
+int air_stpt = 255;
+
+void setup() {
+  
+  pinMode(odorPin, OUTPUT);  
+  pinMode(airPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  if (Serial.available() > 0)
+  {
+    odor_stpt = Serial.read()-'0';
+	
+    Serial.print(odor_stpt);
+    air_stpt = 255 - odor_stpt;
+
+  }
+
+  analogWrite(odorPin, odor_stpt);
+  analogWrite(airPin, air_stpt);
+
+}
+
