@@ -18,7 +18,7 @@ void loop() {
   if (Serial.available() > 0)
   {
     odor_stpt = Serial.read()-'0';
-	
+  
     Serial.print(odor_stpt);
     air_stpt = 255 - odor_stpt;
 

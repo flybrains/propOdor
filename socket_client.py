@@ -3,6 +3,7 @@ import os
 import time
 import olfactometer as olf
 import serial
+import numpy as np
 
 import config
 
@@ -27,7 +28,7 @@ while True:
 txtfile.close()
 
 
-list_of_elems = [elem[:-1] for elem in target_string.split(" ")]
+list_of_elems = [elem for elem in target_string.split(" ")]
 for elem in list_of_elems:
     u_elem = unicode(elem, 'utf-8')
     if u_elem.isnumeric():
@@ -57,23 +58,21 @@ while 1:
     toks = line.split()
     FrameNo = int(toks[0])
     PosY = float(toks[2])
+    
+    #PosY = int(PosY)
+    #PosY = int(np.abs((PosY*60000)/255))
+    print(PosY)
 
     stpt = olf.scale_signal(config.src_distance, PosY)
-    olf.send_signal(ser, stpt)
+    olf.send_signal(ser, 0)
 
     tnow = time.time()
     loop_av += 0.001*((tnow-tstart)*1000-loop_av)
 
-    print( loop_cnt, FrameNo, PosY)
+    #print( loop_cnt, FrameNo, PosY)
 
     loop_cnt += 1
     tstart = tnow
 
     time.sleep(.02)
 
-    if time.time() - initial_time > 30:
-        if 'con_out.txt' in os.listdir()
-        os.remove('con_out.txt')
-        initial_time = time.time()
-    else:
-        pass
